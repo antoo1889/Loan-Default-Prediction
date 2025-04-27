@@ -8,27 +8,27 @@ The loan_default_dataset.csv was created by Coursera as part of the course Data 
 I used the train_test_split(X, y, shuffle=True , test_size=0.2, random_state=42)
 Analysing the categorical variables, we can conclude that the data is well distributed:
 
-![Screenshot](model_card_image1.png)
+![Image](images/model_card_image1.png)
 
-![Screenshot](model_card_image2.png)
+![Image](images/(model_card_image2.png)
 
-![Screenshot](model_card_image3.png)
+![Image](images/model_card_image3.png)
 
 
 
 **Output:** 
 
-![Screenshot](model_card_image4.png)
+![Image](images/model_card_image4.png)
 
 
 **Model Architecture:** 
 ## Performance
 
 In order to decide what model was the best to predict loan defaults, I use:
-•	Random Forest
-•	k-Nearest Neighbors (KNN)
-•	Logistic Regression
-•	XGBoost Classifier
+* Random Forest
+* k-Nearest Neighbors (KNN)
+* Logistic Regression
+* XGBoost Classifier
 
 Before deciding what model to use, I tuned the hyperparameters of each using Bayesian Optimization. I started using BayesSearchCV/GridSearchCV. However, for some of the models it took too long to run and became inefficient. Therefore, I decided to try hyperparameters tunning using Optuna, a hyperparameter optimization framework that’s fast, flexible, and integrates with scikit-learn and PyTorch.
 
@@ -40,45 +40,46 @@ The results were the following for each model:
 
 Comparative table
 
-![Screenshot](model_card_image5.png)
+![Image](images/model_card_image5.png)
 
 ROC Curve
 
-![Screenshot](model_card_image6.png)
+![Image](images/model_card_image6.png)
 
 Precision-Recall Curve
 
-![Screenshot](model_card_image6.png)
+![Image](images/model_card_image6.png)
 
 
 Conclusions:
-    •	Decision Tree: It has the highest capacity to identify true positives (with a recall of 81%). However, it wrongly marks a lot of good loans as defaulters with a low precision value of 15%. It seems to be an option if we only want to identify the default at all cost, but not ideal.
-    •	k-Nearest Neighbours (KNN): Very poor performance overall. Low accuracy and low recall as well as precision. Lowest ROC AUC (53%)
-    •	Logistic Regression: Evidence solid performance with a good balance between Precision and Recall. It has acceptable values for accuracy and the highest ROC. It stands out as a very solid baseline model.
-    •	Random Forest: We can see that it has the second highest accuracy value (77%) but a very low recall of 39%, among the worse models based on this measure what means that it will miss many defaults. This implies that the model may struggle to identify true positives defaults.
-    •	XGBoost Classifier: It presents the highest Accuracy (81%) and best Precision (26%). However, it shows a poor Recall (33%) missing many defaulted loans. Despite this limitation, the highest precision of 25% indicates that it works well identifying positive cases when making predictions.
+*   Decision Tree: It has the highest capacity to identify true positives (with a recall of 81%). However, it wrongly marks a lot of good loans as defaulters with a low precision value of 15%. It seems to be an option if we only want to identify the default at all cost, but not ideal.
+*   k-Nearest Neighbours (KNN): Very poor performance overall. Low accuracy and low recall as well as precision. Lowest ROC AUC (53%)
+*   Logistic Regression: Evidence solid performance with a good balance between Precision and Recall. It has acceptable values for accuracy and the highest ROC. It stands out as a very solid baseline model.
+*   Random Forest: We can see that it has the second highest accuracy value (77%) but a very low recall of 39%, among the worse models based on this measure what means that it will miss many defaults. This implies that the model may struggle to identify true positives defaults.
+*   XGBoost Classifier: It presents the highest Accuracy (81%) and best Precision (26%). However, it shows a poor Recall (33%) missing many defaulted loans. Despite this limitation, the highest precision of 25% indicates that it works well identifying positive cases when making predictions.
 
-As a conclusion, I would use for my loans defaults prediction, Logistic Regression and in second place could be Decision Tree. 
+As a conclusion, I would use for my loans default prediction, **Logistic Regression** and in second place would be **Decision Tree**. 
 
 
 ## Limitations
 
 The results of my analysis showed that there were imbalanced classes. This can cause the model to: be biased toward the majority class (No Default), fail to detect important rare events and show misleading metrics like high accuracy, even if it's not learning anything useful.
+
 Distribution of classes y_train:
-Default
-0    0.883722
-1    0.116278
-Name: proportion, dtype: float64
+
+Non-Default 0.883722
+Default 0.116278
+
 
 Distribution of classes y_test:
-Default
-0    0.884472
-1    0.115528
-Name: proportion, dtype: float64
+
+Non-Default: 0.884472
+Default: 0.115528
+
 
 Therefore, I focused on the relevant features decided via Random Forest and then resample the data based on this importance.  
 
-![Screenshot](model_card_image8.png)
+![Image](images/model_card_image8.png)
 
 Applying Synthetic Minority Over-Sampling Technique (SMOTE) balanced the classes on the training set only and reaching a 50% for default/no default.
 
