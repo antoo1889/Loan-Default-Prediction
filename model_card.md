@@ -10,7 +10,7 @@ Analysing the categorical variables, we can conclude that the data is well distr
 
 ![Image](images/model_card_image1.png)
 
-![Image](images/(model_card_image2.png)
+![Image](images/model_card_image2.png)
 
 ![Image](images/model_card_image3.png)
 
